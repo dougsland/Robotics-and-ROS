@@ -75,6 +75,37 @@ class BaseUGVController:
             print(f"An unexpected error occurred: {e}")
             sys.exit(1)
 
+    def move_forward_6wheels(self, left_front=0.5, left_middle=0.5, left_rear=0.5, 
+                         right_front=0.5, right_middle=0.5, right_rear=0.5):
+        """
+        ** Not sure if supported by vendor, need to be tested **
+
+        Move all six wheels forward with individually specified speeds using T: 13.
+
+        Args:
+            left_front (float): Speed for the front left wheel (-1.0 to 1.0).
+            left_middle (float): Speed for the middle left wheel (-1.0 to 1.0).
+            left_rear (float): Speed for the rear left wheel (-1.0 to 1.0).
+            right_front (float): Speed for the front right wheel (-1.0 to 1.0).
+            right_middle (float): Speed for the middle right wheel (-1.0 to 1.0).
+            right_rear (float): Speed for the rear right wheel (-1.0 to 1.0).
+
+        Returns:
+            str: Response from the rover.
+
+        "T": 2: Configure the motor's PID parameters (Looks like it's not supported by the hardware)
+    """
+    json_data = {
+        "T": 2,
+        "LF": left_front,
+        "LM": left_middle,
+        "LR": left_rear,
+        "RF": right_front,
+        "RM": right_middle,
+        "RR": right_rear
+    }
+    return self.send_json_command(json_data)
+
     def send_json_command(self, json_data):
         """
         Send a JSON command to the rover.
